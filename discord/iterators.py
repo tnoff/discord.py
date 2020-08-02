@@ -163,7 +163,10 @@ class ReactionIterator(_AsyncIterator):
             else:
                 for element in reversed(data):
                     member_id = int(element['id'])
-                    member = self.guild.get_member(member_id)
+                    try:
+                        member = self.guild.get_member(member_id)
+                    except AttributeError:
+                        member = None
                     if member is not None:
                         await self.users.put(member)
                     else:
